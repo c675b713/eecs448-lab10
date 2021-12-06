@@ -7,6 +7,36 @@
     <title>Document</title>
 </head>
 <body>
+    <?php
+    $servername = "mysql.eecs.ku.edu";
+    $username = "c675b713";
+    $password = "ni3gooMi";
+    $dbname = "c675b713";
     
+    // Create connection
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    
+    while(!empty($_POST['toDelete'])){
+        // Check connection
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+        
+        
+        foreach($_POST['toDelete'] as $post){
+            $sql = 'DELETE FROM Posts WHERE post_id=' . $post . ';';
+            if($result = $conn->query($sql)){
+                echo "Post " . $post . " was successfully deleted!";
+                $result->free();
+            }else{
+                echo "Post " . $post . " enountered an error while being deleted. Try again";
+            }
+        }
+
+        
+    }
+
+    $conn->close();
+    ?>
 </body>
 </html>

@@ -4,9 +4,40 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>View User Posts</title>
 </head>
 <body>
-    
+    Choose a user from list of users to view their posts
+        <form action="ViewUserPosts.php" method="post">
+            <select name="usrname" id="usrname">
+                <?php
+                $servername = "mysql.eecs.ku.edu";
+                $username = "c675b713";
+                $password = "ni3gooMi";
+                $dbname = "c675b713";
+        
+                // Create connection
+                $conn = new mysqli($servername, $username, $password, $dbname);
+                // Check connection
+                if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+                }
+
+                $sql = 'SELECT user_id FROM Users';
+
+                if($result = $conn->query($sql)){
+                    while($row = $result->fetch_assoc()){
+                        echo "<option value='" . $row["user_id"] . "'>" . $row["user_id"] . "</option>";
+                    }
+                }else{
+                    echo "Bad Query";
+                }
+
+                //close connection
+                $conn->close();
+                ?>
+            </select>
+        <input type="submit" name="submit" >
+        </form>
 </body>
 </html>
