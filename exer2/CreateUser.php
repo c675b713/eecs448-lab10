@@ -22,23 +22,23 @@
         }
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  
             // collect value of input field
             $data = $_REQUEST['username'];
-          
+            //if data is empty
             if (empty($data)) {
                 echo "data is empty";
             }
         }
+        //sql command
         $sql = "INSERT INTO Users (user_id) VALUES ('$data')";
-
-
+        //if the command works properly, displays to page that it was successful
         if ($conn->query($sql) === TRUE) {
             echo "New user created successfully";
         } else {
+            //if not displays the error 
             echo "Error: " . $sql . "<br>" . $conn->error;
         }
-
+        //close connection
         $conn->close();
     ?>
 

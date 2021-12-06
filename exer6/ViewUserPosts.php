@@ -18,21 +18,24 @@
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
-        //usrname from html user selected
+        //usrname from html admin selected
         $usrname = $_POST['usrname'];
-
+        //creates a table that displays all the posts the user made
         echo "<tr><th>Posts by " . $usrname . "<br></th></tr>";
+        //sql command
         $query = 'SELECT content FROM Posts WHERE author_id="' . $usrname . '";';
 
+        
         if($result = $conn->query($query)){
+                //creates a html table row for each post content
                 while ($row = $result->fetch_assoc()) {
                         echo "<tr><td>" . $row["content"] . "<br></td></tr>";
                 }
                 $result->free();
-        }
+        }//if the user has made not posts, display message
         else
             echo "<tr><td>No posts made by this user yet.</td></tr>";
-        
+        //closes html table
         echo "</table>";
         // Close Connection
         $conn->close();

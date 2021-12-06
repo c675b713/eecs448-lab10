@@ -23,8 +23,11 @@
                 die("Connection failed: " . $conn->connect_error);
                 }
 
+                //sql command
                 $sql = 'SELECT user_id FROM Users';
 
+                //displays the users id as an option 
+                //only displays the users who have made a post
                 if($result = $conn->query($sql)){
                     while($row = $result->fetch_assoc()){
                         echo "<option value='" . $row["user_id"] . "'>" . $row["user_id"] . "</option>";
@@ -32,7 +35,6 @@
                 }else{
                     echo "Bad Query";
                 }
-
                 //close connection
                 $conn->close();
                 ?>
