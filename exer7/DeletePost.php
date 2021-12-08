@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Delete Posts</title>
 </head>
 <body>
     <?php
@@ -15,24 +15,23 @@
     
     // Create connection
     $conn = new mysqli($servername, $username, $password, $dbname);
-    //while the 
+
     while(!empty($_POST['toDelete'])){
         // Check connection
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
+        $lang = implode(",",$_POST['toDelete']);
         
-        foreach($_POST['toDelete'] as $post){
-            $sql = 'DELETE FROM Posts WHERE post_id=' . $post . ';';
-            if($result = $conn->query($sql)){
-                echo "Post " . $post . " was successfully deleted!";
-                $result->free();
-            }else{
-                echo "Post " . $post . " encountered an error while being deleted. Try again";
-            }
-        }    
+        $sql = 'DELETE FROM Posts WHERE post_id IN (' . $lang . ');';
+        if($result = $conn->query($sql)){
+            echo "Post(s): " . $lang . " were successfully deleted!";
+            $result->free();
+        }else{
+            echo "Post " . $post . " enountered an error while being deleted. Try again";
+        }
+        
     }
-    //close connection
     $conn->close();
     ?>
 </body>
